@@ -1,27 +1,36 @@
-% Custom DFT Implementation
-function X = my_dft(x)
-    N = length(x); % Number of samples
-    X = zeros(1, N); % Initialize the DFT output
-    for k = 0:N-1
-        for n = 0:N-1
-            X(k+1) = X(k+1) + x(n+1) * exp(-1j * 2 * pi * k * n / N);
-        end
-    end
-end
+% Input Signal
+x = [1, 2, 3, 4, 5, 6, 7, 8];
 
-% Step 1: Load Data
-data = readtable('Data for testing/IS1n_p54_shading66.csv'); % Replace with your CSV file
-voltage = data{:, 1}; % Voltage values from the first column
+% Step 1: Compute FFT
+X = fft(x); % Use MATLAB's built-in FFT function
+N = length(x); % Number of points
 
-% Step 2: Compute DFT
-dft_result = my_dft(voltage); % Call the custom DFT function
-frequencies = (0:N-1) * (fs / N); % Frequency vector
-magnitude = abs(dft_result) / N; % Normalize magnitude
+% Step 2: Frequency Axis
+f = (0:N-1); % Frequency index
 
-% Step 3: Plot Frequency Spectrum
+% Plotting
 figure;
-plot(frequencies(1:N/2), magnitude(1:N/2)); % Plot positive frequencies
-title('Frequency Spectrum (Using DFT)');
-xlabel('Frequency (Hz)');
+
+% Time Domain Signal
+subplot(3,1,1);
+stem(0:N-1, x, 'filled');
+title('Time Domain Signal');
+xlabel('Sample Index');
+ylabel('Amplitude');
+grid on;
+
+% Magnitude Spectrum
+subplot(3,1,2);
+stem(f, abs(X), 'filled');
+title('Magnitude Spectrum');
+xlabel('Frequency Index');
 ylabel('Magnitude');
+grid on;
+
+% Phase Spectrum
+subplot(3,1,3);
+stem(f, angle(X), 'filled');
+title('Phase Spectrum');
+xlabel('Frequency Index');
+ylabel('Phase (radians)');
 grid on;
