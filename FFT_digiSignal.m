@@ -1,6 +1,6 @@
 % Step 1: Load the CSV File
-data = readtable('Data for testing/Test/VS1_1_p19_error.csv'); % Replace with your CSV file name
-voltage = data{:, 1}; % Extract voltage column (assumed to be the first column)
+data = readtable('Data for testing/Test/VS_normal_condition.csv'); % Replace with your CSV file name
+voltage = data{:, 4}; % Extract voltage column (assumed to be the first column)
 
 % Step 2: Sampling Information
 fs = 1000; % Sampling frequency in Hz (adjust based on your setup)
